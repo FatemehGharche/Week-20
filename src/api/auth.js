@@ -7,6 +7,11 @@ const registerUser = async (userData) => {
   return response.data;
 };
 
+const loginUser = async (userData) => {
+  const response = await axios.post(`${BASE_URL}/auth/login`, userData);
+  return response.data;
+};
+
 
 const getProducts = async () => {
   const token = localStorage.getItem('token');
@@ -41,7 +46,7 @@ const updateProduct = async (productData) => {
   return res.data;
 };
 
-export {registerUser, getProducts, addProduct, deleteProduct, updateProduct };
+export {registerUser, getProducts, addProduct, deleteProduct, updateProduct , loginUser};
 
 
 
