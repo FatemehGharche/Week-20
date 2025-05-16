@@ -12,6 +12,8 @@
     border-radius: 40px;
     border-width: 1px;
     background-color: #ffffff;
+     margin: auto;
+    margin-top: 50px;
     border: 1px solid #E4E4E4
 }
 
@@ -39,6 +41,7 @@
 
 .filed {
     display: flex;
+    flex-direction: row-reverse;
     width: 400px;
     height: 40px;
     border-radius: 15px;
@@ -58,13 +61,14 @@
     padding-top: 10px;
     padding-left: 20px;
     color: #28282880;
+     white-space: nowrap;
 }
 
 
 input {
     border: none;
     outline: none;
-    background: #F2F2F2
+    background-color: #F2F2F2;
 }
 
 input:focus {
@@ -75,6 +79,7 @@ input:focus {
   color: #e74c3c;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+   white-space: nowrap;
 }
 
 .button {
@@ -100,7 +105,7 @@ input:focus {
 }
 
 .link {
-  width: 127px;
+   width: 127px;
     height: 25px;
     font-family: Vazirmatn;
     font-weight: 400;

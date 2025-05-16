@@ -9,6 +9,7 @@
     border: 1px solid #E4E4E4;
     display: flex;
     flex-direction: row-reverse;
+    margin: auto;
 }
 
 p {

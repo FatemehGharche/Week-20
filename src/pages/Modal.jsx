@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './Modal.module.css';
 
 function Modal({ isOpen, onClose, onSubmit, initialData }) {
   const [name, setName] = useState('');
@@ -7,9 +8,9 @@ function Modal({ isOpen, onClose, onSubmit, initialData }) {
 
   useEffect(() => {
     if (initialData) {
-      setName(initialData.name);
-      setInventory(initialData.inventory);
-      setPrice(initialData.price);
+      setName(initialData.name || '');
+      setInventory(initialData.inventory || '');
+      setPrice(initialData.price || '');
     } else {
       setName('');
       setInventory('');
@@ -29,54 +30,60 @@ function Modal({ isOpen, onClose, onSubmit, initialData }) {
       name,
       inventory: Number(inventory),
       price: Number(price),
-      id: initialData?.id, 
+      id: initialData?.id,
     });
     onClose();
   };
 
+  const isEditMode = Boolean(initialData);
+
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex', justifyContent: 'center', alignItems: 'center',
-      zIndex: 1000,
-    }}>
-      <form onSubmit={handleSubmit} style={{
-        backgroundColor: 'white', padding: '2rem', borderRadius: '8px', minWidth: '300px'
-      }}>
-        <h2>{initialData ? 'ویرایش کالا' : 'اضافه کردن کالا'}</h2>
-        <div>
-          <label>نام کالا:</label><br />
+    <div className={styles.modalOverlay}>
+      <form onSubmit={handleSubmit} className={styles.modalContent}>
+        <h2 className={styles.title}>
+          {isEditMode ? 'ویرایش اطلاعات' : 'ایجاد محصول جدید'}
+        </h2>
+        
+        <div className={styles.formGroup}>
+          <label className={styles.label}>نام کالا</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="نام کالا"
+            className={styles.input}
             autoFocus
           />
         </div>
-        <div>
-          <label>موجودی:</label><br />
+
+        <div className={styles.formGroup}>
+          <label className={styles.label}>تعداد موجودی</label>
           <input
             type="number"
             value={inventory}
             onChange={(e) => setInventory(e.target.value)}
+            placeholder="تعداد"
+            className={styles.input}
           />
         </div>
-        <div>
-          <label>قیمت:</label><br />
+
+        <div className={styles.formGroup}>
+          <label className={styles.label}>قیمت</label>
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            placeholder="قیمت"
+            className={styles.input}
           />
         </div>
-        <div style={{ marginTop: '1rem' }}>
-          <button type="submit" style={{ marginRight: '1rem' }}>
-            ذخیره
-          </button>
-          <button type="button" onClick={onClose}>
+
+        <div className={styles.buttonGroup}>
+          <button type="button" onClick={onClose} className={styles.buttonSecondary}>
             انصراف
+          </button>
+          <button type="submit" className={styles.buttonPrimary}>
+            {isEditMode ? 'ثبت اطلاعات جدید' : 'ایجاد'}
           </button>
         </div>
       </form>

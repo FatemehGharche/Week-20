@@ -44,13 +44,13 @@ function Login() {
       <h2>فرم ورود</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.filed}>
-          <label>نام کاربری:</label>
+          <label>نام کاربری</label>
           <input type="text" {...register('username')} />
           {errors.username && <p style={{ color: 'red' }}>{errors.username.message}</p>}
         </div>
 
         <div className={styles.filed}>
-          <label>رمز عبور:</label>
+          <label>رمز عبور</label>
           <input type="password" {...register('password')} />
           {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
         </div>

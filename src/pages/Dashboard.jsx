@@ -4,13 +4,14 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProducts, addProduct, deleteProduct, updateProduct } from '../api/auth.js';
 import { toast } from 'react-toastify';
 
-import Modal from './Modal'; 
+import Modal from './Modal';
 import SearchBox from './SearchBox';
+import DeleteConfirmModal from './DeleteConfirmModal';
 
-import styles from "./Dashboard.module.css"
-import managment from "../assets/setting-3.png"
-import edit from "../assets/edit.png"
-import trash from "../assets/trash.png"
+import styles from "./Dashboard.module.css";
+import managment from "../assets/setting-3.png";
+import edit from "../assets/edit.png";
+import trash from "../assets/trash.png";
 
 function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,8 @@ function Dashboard() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -89,9 +92,16 @@ function Dashboard() {
     setIsModalOpen(true);
   };
 
-  const handleDeleteProduct = (id) => {
-    if (window.confirm('آیا مطمئن هستید که می‌خواهید این کالا را حذف کنید؟')) {
-      deleteProductMutation.mutate(id);
+  const handleDeleteClick = (product) => {
+    setProductToDelete(product);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDeleteProduct = () => {
+    if (productToDelete) {
+      deleteProductMutation.mutate(productToDelete.id);
+      setIsDeleteModalOpen(false);
+      setProductToDelete(null);
     }
   };
 
@@ -108,15 +118,12 @@ function Dashboard() {
 
   const products = data?.data || [];
 
-  
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className={styles.containner}>
-      
-
+    <div className={styles.container}>
       <SearchBox
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
@@ -126,49 +133,49 @@ function Dashboard() {
       <div className={styles.header}>
         <div>
           <button
-        onClick={handleAddProduct}
-        style={{ margin: '1rem', padding: '0.5rem 1rem' }}
-      >
-        افزودن محصول
-      </button>
+            onClick={handleAddProduct}
+            style={{ margin: '1rem', padding: '0.5rem 1rem' }}
+          >
+            افزودن محصول
+          </button>
 
-      <button
-        onClick={handleLogout}
-        style={{ margin: '1rem', padding: '0.5rem 1rem' }}
-      >
-        خروج
-      </button>
+          <button
+            onClick={handleLogout}
+            style={{ margin: '1rem', padding: '0.5rem 1rem' }}
+          >
+            خروج
+          </button>
         </div>
 
-      <div className={styles.managment}>
-        <img src={managment} alt="" />
-        <p>مدیریت کالا</p>
-      </div>
+        <div className={styles.managment}>
+          <img src={managment} alt="" />
+          <p>مدیریت کالا</p>
+        </div>
       </div>
 
       <table>
         <thead>
           <tr>
-            <th >نام کالا</th>
-            <th >موجودی</th>
-            <th >قیمت</th>
-            <th >شناسه</th>
-            <th >عملیات</th>
+            <th>نام کالا</th>
+            <th>موجودی</th>
+            <th>قیمت</th>
+            <th>شناسه</th>
+            <th>عملیات</th>
           </tr>
         </thead>
         <tbody>
           {filteredProducts.map((product) => (
             <tr key={product.id}>
-              <td >{product.name}</td>
-              <td >{product.inventory}</td>
-              <td >{product.price}</td>
-              <td >{product.id}</td>
-              <td >
-                <button onClick={() => handleEditProduct(product)} >
-                  <img src={edit} alt="" />
+              <td>{product.name}</td>
+              <td>{product.inventory}</td>
+              <td>{product.price}</td>
+              <td>{product.id}</td>
+              <td>
+                <button onClick={() => handleEditProduct(product)}>
+                  <img src={edit} alt="ویرایش" />
                 </button>
-                <button onClick={() => handleDeleteProduct(product.id)}>
-                  <img src={trash} alt="" />
+                <button onClick={() => handleDeleteClick(product)}>
+                  <img src={trash} alt="حذف" />
                 </button>
               </td>
             </tr>
@@ -181,6 +188,15 @@ function Dashboard() {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleSaveProduct}
         initialData={selectedProduct}
+      />
+
+      <DeleteConfirmModal
+        isOpen={isDeleteModalOpen}
+        onCancel={() => {
+          setIsDeleteModalOpen(false);
+          setProductToDelete(null);
+        }}
+        onConfirm={confirmDeleteProduct}
       />
     </div>
   );

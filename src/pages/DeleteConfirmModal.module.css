@@ -1,0 +1,75 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 30px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  width: 472px;
+  height: 338px;
+}
+
+.icon {
+  width: 96px;
+  height: 98px;
+  margin: 0 auto 1rem auto;
+}
+
+.text {
+  width: 262px;
+  height: 31px;
+  font-family: Vazirmatn, sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 100%;
+  text-align: center;
+  margin: 0 auto 2rem auto;
+  color: #282828;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-family: Vazirmatn, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  text-align: center;
+}
+
+.cancelButton {
+  width: 160px;
+  height: 41px;
+  border-radius: 10px;
+  padding: 10px;
+  background: #DFDFDF;
+  color: #282828CC;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteButton {
+  width: 160px;
+  height: 41px;
+  border-radius: 10px;
+  padding: 10px;
+  background: #F43F5E;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
