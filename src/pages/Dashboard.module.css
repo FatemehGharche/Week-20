@@ -1,0 +1,99 @@
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    width: 1140px;
+    height: 68px;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.managment {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.managment p{
+    width: 110px;
+    height: 38px;
+    font-family: Vazirmatn;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #282828;
+}
+
+.managment img {
+    width: 30px;
+    height: 30px;
+}
+
+.header button {
+    width: 132px;
+    height: 45px;
+    top: 138px;
+    left: 150px;
+    border-radius: 10px;
+    padding: 10px;
+    background: #55A3F0;
+    font-family: Vazirmatn;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #ffffff;
+    border: none;
+}
+
+table{
+    width: 1140px;
+    height: 450px;
+    top: 199px;
+    left: 150px;
+    border-radius: 30px;
+    margin-top: 20px;
+}
+
+thead{
+    width: 1140px;
+    height: 70px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background: #F2F2F2;
+}
+
+th {
+    font-family: Vazirmatn;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: right;
+    color: #282828;
+    text-align: center;
+}
+
+tbody tr{
+    width: 450px;
+    height: 60px;
+    top: 123px;
+    left: 1140px;
+    angle: -179.99 deg;
+    border-width: 1px;
+    border: 1px solid #F2F2F2;
+    text-align: center;
+    color:  #282828;
+;
+}
+
+
+
+tbody button{
+    border: none;
+    background-color: #ffffff;
+}

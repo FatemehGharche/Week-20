@@ -6,6 +6,9 @@ import { loginUser } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import styles from "./Login.module.css"
+import logo from '../assets/Union.png'
+
 function Login() {
   const navigate = useNavigate();
 
@@ -36,25 +39,26 @@ function Login() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto' }}>
-      <h2>ورود</h2>
+    <div className={styles.container}>
+      <img src={logo} alt="" />
+      <h2>فرم ورود</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className={styles.filed}>
           <label>نام کاربری:</label>
           <input type="text" {...register('username')} />
           {errors.username && <p style={{ color: 'red' }}>{errors.username.message}</p>}
         </div>
 
-        <div>
+        <div className={styles.filed}>
           <label>رمز عبور:</label>
           <input type="password" {...register('password')} />
           {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
         </div>
 
-        <button type="submit">ورود</button>
+        <button type="submit" className={styles.button}>ورود</button>
       </form>
       <p>
-        حساب نداری؟ <a href="/register">ثبت‌نام</a>
+        <a href="/register">ایجاد حساب کاربری!</a>
       </p>
     </div>
   );

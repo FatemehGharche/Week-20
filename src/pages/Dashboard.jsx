@@ -3,10 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProducts, addProduct, deleteProduct, updateProduct } from '../api/auth.js';
 import { toast } from 'react-toastify';
+
 import Modal from './Modal'; 
+import SearchBox from './SearchBox';
+
+import styles from "./Dashboard.module.css"
+import managment from "../assets/setting-3.png"
+import edit from "../assets/edit.png"
+import trash from "../assets/trash.png"
 
 function Dashboard() {
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -100,16 +108,28 @@ function Dashboard() {
 
   const products = data?.data || [];
 
-  return (
-    <div style={{ padding: '2rem', textAlign: 'center' }}>
-      <h1>خوش اومدی به داشبورد!</h1>
-      <p>تو الان وارد حساب کاربری‌ات شدی.</p>
+  
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-      <button
+  return (
+    <div className={styles.containner}>
+      
+
+      <SearchBox
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="جستجو بر اساس نام کالا..."
+      />
+
+      <div className={styles.header}>
+        <div>
+          <button
         onClick={handleAddProduct}
         style={{ margin: '1rem', padding: '0.5rem 1rem' }}
       >
-        اضافه کردن کالا جدید
+        افزودن محصول
       </button>
 
       <button
@@ -118,36 +138,38 @@ function Dashboard() {
       >
         خروج
       </button>
+        </div>
 
-      <table
-        style={{
-          margin: '2rem auto',
-          borderCollapse: 'collapse',
-          width: '80%',
-          textAlign: 'center',
-        }}
-      >
+      <div className={styles.managment}>
+        <img src={managment} alt="" />
+        <p>مدیریت کالا</p>
+      </div>
+      </div>
+
+      <table>
         <thead>
           <tr>
-            <th style={{ border: '1px solid #ccc', padding: '0.5rem' }}>نام کالا</th>
-            <th style={{ border: '1px solid #ccc', padding: '0.5rem' }}>موجودی</th>
-            <th style={{ border: '1px solid #ccc', padding: '0.5rem' }}>قیمت</th>
-            <th style={{ border: '1px solid #ccc', padding: '0.5rem' }}>شناسه</th>
-            <th style={{ border: '1px solid #ccc', padding: '0.5rem' }}>عملیات</th>
+            <th >نام کالا</th>
+            <th >موجودی</th>
+            <th >قیمت</th>
+            <th >شناسه</th>
+            <th >عملیات</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <tr key={product.id}>
-              <td style={{ border: '1px solid #ccc', padding: '0.5rem' }}>{product.name}</td>
-              <td style={{ border: '1px solid #ccc', padding: '0.5rem' }}>{product.inventory}</td>
-              <td style={{ border: '1px solid #ccc', padding: '0.5rem' }}>{product.price}</td>
-              <td style={{ border: '1px solid #ccc', padding: '0.5rem' }}>{product.id}</td>
-              <td style={{ border: '1px solid #ccc', padding: '0.5rem' }}>
-                <button onClick={() => handleEditProduct(product)} style={{ marginRight: '0.5rem' }}>
-                  ویرایش
+              <td >{product.name}</td>
+              <td >{product.inventory}</td>
+              <td >{product.price}</td>
+              <td >{product.id}</td>
+              <td >
+                <button onClick={() => handleEditProduct(product)} >
+                  <img src={edit} alt="" />
                 </button>
-                <button onClick={() => handleDeleteProduct(product.id)}>حذف</button>
+                <button onClick={() => handleDeleteProduct(product.id)}>
+                  <img src={trash} alt="" />
+                </button>
               </td>
             </tr>
           ))}

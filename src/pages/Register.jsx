@@ -6,6 +6,9 @@ import { registerUser } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import styles from "./Register.module.css"
+import logo from '../assets/Union.png'
+
 function Register() {
   const navigate = useNavigate();
 
@@ -47,22 +50,23 @@ function Register() {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto' }}>
-      <h2>ثبت‌نام</h2>
+    <div className={styles.container}>
+      <img src={logo} alt="" />
+      <h2>فرم ثبت نام</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className={styles.filed}>
           <label>نام کاربری:</label>
           <input type="text" {...register('username')} />
           {errors.username && <p style={{ color: 'red' }}>{errors.username.message}</p>}
         </div>
 
-        <div>
+        <div className={styles.filed}>
           <label>رمز عبور:</label>
           <input type="password" {...register('password')} />
           {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
         </div>
 
-        <div>
+        <div className={styles.filed}>
           <label>تکرار رمز عبور:</label>
           <input type="password" {...register('repeatPassword')} />
           {errors.repeatPassword && (
@@ -70,10 +74,12 @@ function Register() {
           )}
         </div>
 
-        <button type="submit">ثبت‌نام</button>
+        <button type="submit" className={styles.button} >
+          ثبت‌نام
+        </button>
       </form>
-      <p>
-        قبلاً ثبت‌نام کردی؟ <a href="/login">ورود</a>
+      <p className={styles.link}>
+           <a href="/login">حساب کاربری دارید؟</a>
       </p>
     </div>
   );
