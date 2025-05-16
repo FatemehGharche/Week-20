@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { registerUser } from '../api/auth';
+
 
 
 function Register() {
@@ -26,9 +28,21 @@ function Register() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log('Form Data:', data);
-    alert('ثبت‌نام با موفقیت انجام شد!');
+  const onSubmit = async (data) => {
+    try {
+      const result = await registerUser({
+        username: data.username,
+        password: data.password,
+      });
+
+      console.log('ثبت‌نام موفق:', result);
+      alert('ثبت‌نام موفقیت‌آمیز بود!');
+    } catch (error) {
+      console.error('خطا در ثبت‌نام:', error);
+      const errorMessage =
+      error.response?.data?.message || 'خطا در ثبت‌نام. لطفاً دوباره تلاش کنید.';
+      alert(errorMessage);
+    }
   };
 
 
@@ -66,3 +80,4 @@ function Register() {
 }
 
 export default Register
+
